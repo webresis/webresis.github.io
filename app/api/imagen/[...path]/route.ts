@@ -31,6 +31,36 @@ const MIME_TYPES: Record<string, string> = {
 /** The root content directory (resolved at startup). */
 const CONTENT_ROOT = path.resolve(process.cwd(), 'src', 'content', 'resistencia')
 
+export const dynamic = 'force-static'
+
+/**
+ * Generate static paths for all images in the content directory.
+ * This allows Next.js static export (GitHub Pages) to save them as static files.
+ */
+export function generateStaticParams() {
+  const fsSync = require('fs')
+  const contentDir = path.resolve(process.cwd(), 'src', 'content', 'resistencia')
+  const paths: { path: string[] }[] = []
+
+  if (!fsSync.existsSync(contentDir)) return []
+
+  function walk(dir: string, base: string) {
+    const entries = fsSync.readdirSync(dir, { withFileTypes: true })
+    for (const entry of entries) {
+      const fullPath = path.join(dir, entry.name)
+      if (entry.isDirectory()) {
+        walk(fullPath, base)
+      } else if (ALLOWED_EXTENSIONS.has(path.extname(entry.name).toLowerCase())) {
+        const rel = path.relative(base, fullPath).replace(/\\/g, '/')
+        paths.push({ path: rel.split('/') })
+      }
+    }
+  }
+
+  walk(contentDir, contentDir)
+  return paths
+}
+
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ path: string[] }> }
