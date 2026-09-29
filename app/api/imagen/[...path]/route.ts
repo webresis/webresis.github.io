@@ -58,6 +58,13 @@ export function generateStaticParams() {
   }
 
   walk(contentDir, contentDir)
+
+  // Next.js static export fails if a dynamic route returns an empty array.
+  // If there are no images yet, provide a dummy path so the build succeeds.
+  if (paths.length === 0) {
+    paths.push({ path: ['.dummy-image'] })
+  }
+
   return paths
 }
 

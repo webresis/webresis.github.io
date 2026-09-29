@@ -1,0 +1,3 @@
+:HL["/_next/static/chunks/38qpi3d7m6wdn.css","style"]
+:HC["/",""]
+0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"curso","param":null,"prefetchHints":4192,"slots":{"children":{"name":"slug","param":{"type":"c","key":"05-recipientes-presion/conceptos-principales","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}},"staleTime":300,"buildId":"afOiuCFcW8W2oeMgalKmv"}
