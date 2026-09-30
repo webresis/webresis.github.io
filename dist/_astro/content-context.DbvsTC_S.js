@@ -1,1 +1,0 @@
-import{j as o}from"./jsx-runtime.BjG_zV1W.js";import{r as e}from"./index.CkVDnZ-5.js";const n=e.createContext(null);function i({slug:t,children:r}){return o.jsx(n.Provider,{value:{slug:t},children:r})}export{i as ContentProvider};

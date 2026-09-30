@@ -82,7 +82,13 @@ export default function CourseSearch() {
   // ─── Navigate to result ────────────────────────────────────────────
   const navigateTo = useCallback((slug: string) => {
     setOpen(false)
-    window.location.href = `/curso/${slug}`
+    if (typeof window !== 'undefined') {
+      import('astro:transitions/client').then(({ navigate }) => {
+        navigate(`/curso/${slug}`)
+      }).catch(() => {
+        window.location.href = `/curso/${slug}`
+      })
+    }
   }, [])
 
   // ─── Keyboard navigation within results ────────────────────────────

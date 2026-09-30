@@ -1,0 +1,1 @@
+import{j as o}from"./jsx-runtime.TBa3i5EZ.js";import{r as e}from"./index.CVf8TyFT.js";const n=e.createContext(null);function i({slug:t,children:r}){return o.jsx(n.Provider,{value:{slug:t},children:r})}export{i as ContentProvider};
