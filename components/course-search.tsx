@@ -154,32 +154,32 @@ export default function CourseSearch() {
                   onClick={() => section.slug && navigateTo(section.slug)}
                   onMouseEnter={() => setSelectedIndex(index)}
                   className={cn(
-                    'flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors',
+                    'flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-all duration-200 ease-out',
                     index === selectedIndex
-                      ? 'bg-[#7f0303] text-[#fff8f4]'
-                      : 'text-[#604747] hover:bg-[#f2dddd]'
+                      ? 'bg-[#f2dddd] text-[#7f0303]'
+                      : 'text-[#604747] hover:bg-[#f2dddd]/50'
                   )}
                 >
                   <FileText className={cn(
-                    'size-4 shrink-0',
-                    index === selectedIndex ? 'text-[#e2bcbc]' : 'text-[#b28a8a]'
+                    'size-4 shrink-0 transition-colors',
+                    index === selectedIndex ? 'text-[#a34a4a]' : 'text-[#b28a8a]'
                   )} />
                   <div className="min-w-0 flex-1">
                     <p className={cn(
-                      'truncate text-sm font-medium',
-                      index === selectedIndex ? 'text-[#fff8f4]' : 'text-[#4b1719]'
+                      'truncate text-sm font-medium transition-colors',
+                      index === selectedIndex ? 'text-[#7f0303]' : 'text-[#4b1719]'
                     )}>
                       {section.title}
                     </p>
                     <p className={cn(
-                      'truncate text-[11px]',
-                      index === selectedIndex ? 'text-[#e2bcbc]' : 'text-[#967070]'
+                      'truncate text-[11px] transition-colors',
+                      index === selectedIndex ? 'text-[#a34a4a]' : 'text-[#967070]'
                     )}>
                       Capítulo {section.chapterNumber} · {section.chapterTitle}
                     </p>
                   </div>
                   {index === selectedIndex && (
-                    <ArrowRight className="size-3.5 shrink-0 text-[#e2bcbc]" />
+                    <ArrowRight className="size-3.5 shrink-0 text-[#a34a4a] transition-all" />
                   )}
                 </button>
               ))
