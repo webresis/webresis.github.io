@@ -1,0 +1,25 @@
+---
+import '../styles/globals.css';
+import 'katex/dist/katex.min.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+  </head>
+  <body class="bg-[#faf5f3] text-[#4d3838] antialiased min-h-screen selection:bg-[#dfc4c4] selection:text-[#4b1719]">
+    <slot />
+  </body>
+</html>

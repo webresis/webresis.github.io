@@ -1,0 +1,78 @@
+---
+import Layout from '@/src/layouts/Layout.astro';
+import TextbookLayout from '@/components/textbook-layout';
+import { findSectionBySlug, allSections } from '@/lib/course-data';
+import { mdxComponents } from '@/components/mdx-components';
+import { ContentProvider } from '@/lib/content-context';
+
+export function getStaticPaths() {
+  return allSections
+    .filter((s) => s.slug !== null)
+    .map((s) => ({
+      params: { slug: s.slug },
+    }));
+}
+
+const { slug } = Astro.params;
+const sectionData = findSectionBySlug(slug!);
+
+if (!sectionData) {
+  return Astro.redirect('/404');
+}
+
+const { section, previous, next } = sectionData;
+
+// Load MDX content dynamically
+const mdxFiles = import.meta.glob('/src/content/resistencia/**/*.mdx', { eager: true });
+const exactPath = `/src/content/resistencia/${slug}/index.mdx`;
+const fallbackPath = `/src/content/resistencia/${slug}.mdx`;
+
+let Content = null;
+let headings = [];
+
+if (mdxFiles[exactPath]) {
+  const mod = mdxFiles[exactPath] as any;
+  Content = mod.default;
+  headings = mod.getHeadings?.() || [];
+} else if (mdxFiles[fallbackPath]) {
+  const mod = mdxFiles[fallbackPath] as any;
+  Content = mod.default;
+  headings = mod.getHeadings?.() || [];
+}
+
+// Map Astro's headings { depth, slug, text } to { level, id, text }
+const mappedHeadings = headings.map((h: any) => ({
+  level: h.depth,
+  id: h.slug,
+  text: h.text,
+}));
+---
+
+<Layout title={`${section.title} | Resistencia de Materiales — UNI`} description={`Capítulo ${section.chapterNumber}: ${section.chapterTitle}`}>
+  <ContentProvider slug={slug as string} client:load>
+    <TextbookLayout
+      client:load
+      activeSlug={slug as string}
+      chapterNumber={section.chapterNumber}
+      chapterTitle={section.chapterTitle}
+      sectionTitle={section.title}
+      headings={mappedHeadings}
+      previous={previous as any}
+      next={next as any}
+    >
+      {Content ? (
+        <Content components={mdxComponents} />
+      ) : (
+        <div class="flex min-h-[40vh] items-center justify-center rounded-xl border border-dashed border-[#d9aaaa] bg-[#faf0ef] p-10 text-center text-[#765e5e]">
+          <div>
+            <div class="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-[#f8eaea]">
+              <svg class="size-6 text-[#a34a4a]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
+            </div>
+            <h2 class="text-lg font-semibold text-[#4b1719]">Próximamente</h2>
+            <p class="mt-2 text-sm">Este tema aún no tiene contenido publicado. ¡Vuelve pronto!</p>
+          </div>
+        </div>
+      )}
+    </TextbookLayout>
+  </ContentProvider>
+</Layout>
