@@ -154,7 +154,7 @@ export default function CourseSearch() {
                   onClick={() => section.slug && navigateTo(section.slug)}
                   onMouseEnter={() => setSelectedIndex(index)}
                   className={cn(
-                    'flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-all duration-200 ease-out',
+                    'flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors duration-75',
                     index === selectedIndex
                       ? 'bg-[#f2dddd] text-[#7f0303]'
                       : 'text-[#604747] hover:bg-[#f2dddd]/50'

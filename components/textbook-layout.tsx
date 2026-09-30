@@ -94,7 +94,7 @@ function Sidebar({
             const isExpanded = expanded === chapter.number
             return (
               <div key={chapter.number} className="mb-1">
-                <button onClick={() => setExpanded(isExpanded ? '' : chapter.number)} className={cn('flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-left transition-all duration-200 ease-out', isExpanded ? 'text-[#4b1719]' : 'text-[#604747] hover:bg-[#f3e0df]')}>
+                <button onClick={() => setExpanded(isExpanded ? '' : chapter.number)} className={cn('flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-left transition-colors duration-75', isExpanded ? 'text-[#4b1719]' : 'text-[#604747] hover:bg-[#f3e0df]')}>
                   <span className="w-5 font-mono text-[10px] font-semibold text-[#a47b7b]">{chapter.number}</span>
                   <span className="flex-1 text-[13px] font-semibold">{chapter.title}</span>
                   {isExpanded ? <ChevronDown className="size-3.5 text-[#967070]" /> : <ChevronRight className="size-3.5 text-[#967070]" />}
@@ -112,7 +112,7 @@ function Sidebar({
                           onClose()
                         }}
                         className={cn(
-                          'relative block w-full rounded-r-md px-3 py-2 text-left text-xs leading-tight transition-all duration-200 ease-out',
+                          'relative block w-full rounded-r-md px-3 py-2 text-left text-xs leading-tight transition-colors duration-75',
                           isActive
                             ? 'bg-[#f2dddd] font-semibold text-[#7f0303] before:absolute before:-left-[13px] before:top-0 before:h-full before:w-0.5 before:bg-[#7f0303]'
                             : section.slug
