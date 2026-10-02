@@ -1,82 +1,78 @@
-# 📖 Guía para contribuidores — Resistencia de Materiales UNI
+# 📖 Resistencia de Materiales — UNI
 
-> **¿Eres nuevo en el proyecto?** Esta guía te explica todo lo que necesitas para agregar contenido al curso. No necesitas saber React ni programación — solo Markdown.
-
----
-
-## Tabla de contenidos
-
-- [Requisitos previos](#requisitos-previos)
-- [Instalación](#instalación)
-- [Estructura del proyecto](#estructura-del-proyecto)
-- [¿Cómo agregar contenido?](#cómo-agregar-contenido)
-- [Sintaxis MDX](#sintaxis-mdx)
-- [Componentes disponibles](#componentes-disponibles)
-- [Imágenes](#imágenes)
-- [Ecuaciones con LaTeX](#ecuaciones-con-latex)
-- [Tablas](#tablas)
-- [Ejemplo completo de un tema](#ejemplo-completo-de-un-tema)
-- [Previsualizar tu contenido](#previsualizar-tu-contenido)
-- [Preguntas frecuentes](#preguntas-frecuentes)
+Plataforma interactiva del curso de Resistencia de Materiales de la Universidad Nacional de Ingeniería (UNI). Visítala en vivo en **[webresis.github.io](https://webresis.github.io)**.
 
 ---
 
-## Requisitos previos
+## 🚀 Primeros pasos (para alguien completamente nuevo)
 
-Solo necesitas tener instalado:
+### 1. Instala las herramientas necesarias
+
+Antes de clonar el proyecto necesitas tener instalado:
 
 | Herramienta | Versión mínima | Descarga |
 |---|---|---|
-| **Node.js** | 18 o superior | [nodejs.org](https://nodejs.org/) |
-| **npm** | Viene con Node.js | — |
-| **Git** | Cualquiera | [git-scm.com](https://git-scm.com/) |
+| **Node.js** | 18 o superior | [nodejs.org](https://nodejs.org/) → descarga el instalador LTS |
+| **Git** | Cualquiera | [git-scm.com](https://git-scm.com/downloads) |
 
-Un editor de texto como [VS Code](https://code.visualstudio.com/) es recomendado.
+> 💡 **¿Cómo verificar si ya los tienes?** Abre una terminal (PowerShell en Windows / Terminal en Mac o Linux) y ejecuta:
+> ```bash
+> node --version   # debe mostrar v18.x.x o superior
+> git --version    # debe mostrar cualquier versión
+> ```
+
+Un editor de texto como [VS Code](https://code.visualstudio.com/) es altamente recomendado.
 
 ---
 
-## Instalación
+### 2. Clona el repositorio
 
 ```bash
-# 1. Clona el repositorio
-git clone <URL-del-repositorio>
-cd resistencia-materiales
+git clone https://github.com/webresis/webresis.github.io.git
+cd webresis.github.io
+```
 
-# 2. Instala dependencias
+### 3. Instala las dependencias
+
+```bash
 npm install
+```
 
-# 3. Inicia el servidor de desarrollo
+Esto descargará todos los paquetes necesarios (puede tardar 1–2 minutos la primera vez).
+
+### 4. Inicia el servidor de desarrollo
+
+```bash
 npm run dev
 ```
 
-Abre **http://localhost:3000** en tu navegador. ¡Ya puedes ver el curso!
+Abre **[http://localhost:4321](http://localhost:4321)** en tu navegador. ¡Ya puedes ver el curso corriendo localmente!
+
+> ℹ️ El servidor se recarga automáticamente cada vez que guardas un archivo. No necesitas reiniciarlo.
 
 ---
 
-## Estructura del proyecto
+## 📁 Estructura del proyecto
 
 ```
-resistencia-materiales/
-├── app/                          ← Rutas y páginas (NO tocar)
+webresis.github.io/
 ├── components/                   ← Componentes de la UI (NO tocar)
 ├── lib/                          ← Utilidades y datos del curso
 │   └── course-data.ts            ← 📌 Registrar secciones nuevas aquí
-├── src/content/                  ← ⭐ TU CONTENIDO VA AQUÍ
-│   └── resistencia/
-│       ├── 01-introduccion/
-│       │   ├── panorama-del-curso/
-│       │   │   └── index.mdx     ← Contenido del tema
-│       │   └── unidades-y-dimensiones/
-│       │       └── index.mdx
-│       ├── 02-esfuerzo-deformacion/
-│       │   ├── esfuerzo-normal/
-│       │   │   ├── index.mdx     ← Contenido MDX
-│       │   │   └── barra-axial.png  ← Imágenes locales
-│       │   ├── esfuerzo-cortante/
-│       │   │   └── index.mdx
-│       │   └── ...
-│       └── ...
+├── src/
+│   ├── content/                  ← ⭐ TU CONTENIDO VA AQUÍ
+│   │   └── resistencia/
+│   │       ├── 01-esfuerzos-falla/
+│   │       │   └── conceptos-principales/
+│   │       │       └── index.mdx
+│   │       ├── 02-deformaciones-ley-hooke/
+│   │       │   └── conceptos-principales/
+│   │       │       └── index.mdx
+│   │       └── ...
+│   ├── pages/                    ← Rutas de Astro (NO tocar)
+│   └── layouts/                  ← Plantillas de página (NO tocar)
 ├── public/                       ← Archivos estáticos (favicon, etc.)
+├── astro.config.mjs              ← Configuración de Astro (NO tocar)
 ├── package.json
 └── README.md                     ← Esta guía
 ```
@@ -84,381 +80,161 @@ resistencia-materiales/
 ### Regla de oro
 
 > **Solo necesitas editar archivos dentro de `src/content/resistencia/`.**
-> No necesitas tocar `app/`, `components/`, ni crear páginas React.
+> No necesitas tocar `src/pages/`, `components/`, ni crear ninguna página.
 
 ---
 
-## ¿Cómo agregar contenido?
+## ✍️ ¿Cómo agregar o administrar contenido?
 
-### Paso 1 — Crea tu carpeta y archivo
+¡Olvídate de crear carpetas manualmente o tocar código de configuración! Hemos creado un **Panel de Administración** súper fácil de usar desde tu terminal.
 
-Cada tema tiene su propia carpeta con un archivo `index.mdx` dentro:
+### Paso 1 — Abre el Panel de Administración
+
+Abre tu terminal en la carpeta del proyecto y ejecuta:
 
 ```bash
-# Ejemplo: agregar contenido sobre Ley de Hooke
-mkdir -p src/content/resistencia/02-esfuerzo-deformacion/ley-de-hooke
+npm run gestor
 ```
 
-Luego crea el archivo `index.mdx` dentro de esa carpeta.
+### Paso 2 — Selecciona lo que quieres hacer
 
-### Paso 2 — Verifica si la sección ya está registrada
+Aparecerá un menú interactivo a color. Usa las flechas de tu teclado (Arriba/Abajo) y la tecla **Enter** para elegir:
 
-Abre `lib/course-data.ts` y busca si tu sección ya aparece. Por ejemplo:
+*   ✨ **Crear nuevo tema:** Elige el capítulo y ponle un título. ¡El sistema creará la carpeta, armará una plantilla base para ti, y lo enlazará al menú automáticamente!
+*   ✏️ **Editar título de un tema:** Te permite cambiarle el nombre a cualquier tema existente de manera fácil.
+*   🗑️ **Eliminar un tema:** Borra un tema viejo (te pedirá confirmación clara para no borrar nada por accidente).
 
-```ts
-{ id: '2.5', title: 'Ley de Hooke', slug: '02-esfuerzo-deformacion/ley-de-hooke' }
-```
+### Paso 3 — Edita tu contenido
 
-- ✅ **Si ya existe** → solo crea el archivo `index.mdx` y el sistema lo detecta automáticamente.
-- ❌ **Si no existe** → agrégala dentro del capítulo correspondiente:
-
-```ts
-{
-  number: '02',
-  title: 'Esfuerzo y deformación',
-  sections: [
-    // ... secciones existentes ...
-    { id: '2.5', title: 'Ley de Hooke', slug: '02-esfuerzo-deformacion/ley-de-hooke' },  // ← nueva
-  ],
-},
-```
-
-> ⚠️ El `slug` debe coincidir exactamente con la ruta de tu carpeta dentro de `src/content/resistencia/`.
-
-### Paso 3 — Escribe tu contenido
-
-Abre tu `index.mdx` y escribe usando Markdown + los componentes del curso. Mira la sección [Sintaxis MDX](#sintaxis-mdx) y el [Ejemplo completo](#ejemplo-completo-de-un-tema).
-
-### Paso 4 — Previsualiza
-
-```bash
-npm run dev
-```
-
-Navega a tu sección en el navegador. También puedes usar **Ctrl+K** para buscar tu tema.
+Si creaste un nuevo tema (ej. "Ley de Hooke"), el sistema te dirá dónde creó el archivo (ej. `src/content/resistencia/02-deformaciones/ley-de-hooke/index.mdx`). 
+¡Solo abre ese archivo en tu editor y empieza a escribir usando los componentes de abajo!
 
 ---
 
-## Sintaxis MDX
+## 🧩 Componentes Especiales (Cajas de diseño)
 
-MDX es **Markdown normal** con la capacidad de usar componentes de React. Si sabes Markdown, ya sabes el 90% de MDX.
+Para que tus clases se vean como un libro profesional, hemos creado "cajas" de diseño que puedes usar simplemente copiando y pegando unos textos especiales. No necesitas saber programar, solo copia el código y cambia el texto de adentro.
 
-### Texto básico
-
-```mdx
-# Título principal (h1)
-
-## Subtítulo (h2)
-
-### Sub-subtítulo (h3)
-
-Párrafo normal con **negrita**, *cursiva* y `código en línea`.
-
-- Lista con viñetas
-- Otro punto
-  - Sub-punto
-
-1. Lista numerada
-2. Segundo paso
-3. Tercer paso
-
-> Cita o bloque destacado
-
----   ← Línea divisoria
-```
-
-### Links
+### 1. Definiciones (`<Definition>`)
+Usa esto cuando quieras resaltar un concepto importante.
 
 ```mdx
-[Texto del link](https://ejemplo.com)
-```
-
----
-
-## Componentes disponibles
-
-Estos componentes están disponibles en **todos** los archivos `.mdx` sin necesidad de importarlos. Solo escríbelos directamente:
-
-### `<Definition>` — Definiciones y conceptos clave
-
-```mdx
-<Definition>
-El **esfuerzo normal** es la intensidad de la fuerza interna
-que actúa perpendicularmente a una sección.
-</Definition>
-
-<Definition title="Módulo de Young">
-Relación entre el esfuerzo y la deformación en la zona elástica.
+<Definition title="¿Qué es el esfuerzo?">
+El esfuerzo es la fuerza interna que se genera en un material cuando le aplicamos una carga externa.
 </Definition>
 ```
 
-### `<Formula>` — Ecuaciones destacadas
+### 2. Ecuaciones Destacadas (`<Formula>`)
+Usa esto para poner una fórmula en una cajita especial para que resalte.
 
 ```mdx
 <Formula label="Ley de Hooke">
-σ = Eε
+  $$ \sigma = E \cdot \varepsilon $$
 </Formula>
 ```
 
-> **Nota:** Para ecuaciones complejas, usa LaTeX dentro de `$$...$$` (ver [Ecuaciones con LaTeX](#ecuaciones-con-latex)).
-
-### `<Example>` — Ejemplos resueltos
+### 3. Ejemplos Resueltos (`<Example>`) y Soluciones (`<Solution>`)
+Si quieres poner un ejemplo resuelto paso a paso. Recuerda usar `number={1}` para que se numere automáticamente. Lo que pongas dentro de `<Solution>` estará oculto hasta que el alumno haga clic.
 
 ```mdx
-<Example title="Problema 2.1 — Barra de acero bajo tracción">
-Una barra de acero de sección circular está sometida a una
-carga axial de **12 kN**. Si su diámetro es de **25 mm**,
-determine el esfuerzo normal promedio.
+<Example number={1} title="Cálculo en un cable">
+Un cable soporta 8 kN de peso. ¿Cuál es su esfuerzo?
 
-**Datos:**
-- P = 12 000 N
-- d = 25 mm
-
-**Solución:**
-
-$$
-A = \frac{\pi d^2}{4} = \frac{\pi (25)^2}{4} = 490.9 \text{ mm}^2
-$$
-
-$$
-\sigma = \frac{P}{A} = \frac{12\,000}{490.9} = 24.4 \text{ MPa}
-$$
+<Solution>
+Dividimos la fuerza entre el área para hallar el esfuerzo final.
+</Solution>
 </Example>
 ```
 
-### `<Problem>` — Problemas propuestos
+### 4. Problemas para Resolver (`<Problem>`)
+Igual que el ejemplo, pero con un diseño punteado para ejercicios propuestos.
 
 ```mdx
-<Problem>
-Una varilla de aluminio de 18 mm de diámetro soporta una
-carga de compresión de 8 kN. ¿Cuál es el esfuerzo normal
-promedio? ¿Es de tracción o de compresión?
+<Problem number={1} title="Reto para el alumno">
+Calcula el esfuerzo cortante de la siguiente figura.
+
+<Solution>
+La respuesta correcta es 15 MPa.
+</Solution>
 </Problem>
-
-<Problem title="Ejercicio 3.5">
-Calcule la deformación total de una barra sometida a...
-</Problem>
 ```
 
-### `<Note>` — Notas y observaciones
+### 5. Resumen (`<Summary>`)
+Ideal para colocar al final de la página para resumir la clase.
 
 ```mdx
-<Note>
-Una carga axial produce un estado de esfuerzo uniforme solo
-cuando actúa en el centroide del área.
-</Note>
-
-<Note title="Importante">
-Este resultado solo aplica en el rango elástico del material.
-</Note>
+<Summary>
+En esta clase aprendimos que los materiales se deforman dependiendo de su módulo de elasticidad.
+</Summary>
 ```
 
-### `<Image>` — Imágenes con descripción
+### 6. Imágenes (`<Image>`)
+Guarda la imagen (por ejemplo `foto.png`) en la **misma carpeta** donde estás escribiendo tu texto y copia esto:
 
 ```mdx
-<Image
-  src="./barra-axial.png"
-  alt="Barra sometida a carga axial"
-  caption="Figura 2.1 — Barra prismática bajo tracción"
-/>
+<Image src="foto.png" alt="Descripción corta de la foto" caption="Figura 1: Aquí va el texto que aparece debajo de la imagen." />
 ```
-
-> Coloca tus imágenes en la **misma carpeta** que tu `index.mdx`. Ver sección [Imágenes](#imágenes).
-
-### `<Quiz>` — Preguntas con respuesta oculta
-
-```mdx
-<Quiz
-  question="¿Qué sucede con el esfuerzo si se duplica el área?"
-  answer={<>El esfuerzo se reduce a la mitad, ya que σ = P/A.</>}
-/>
-```
-
-### `<StressCalculator>` — Calculadora interactiva
-
-```mdx
-<StressCalculator />
-```
-
-### `<BeamDiagram>` y `<MohrCircle>` — Diagramas interactivos
-
-```mdx
-<BeamDiagram />
-<MohrCircle />
-```
-
-### Resumen rápido
-
-| Componente | Uso | Props opcionales |
-|---|---|---|
-| `<Definition>` | Definiciones | `title` |
-| `<Formula>` | Ecuación destacada | `label` |
-| `<Example>` | Ejemplo resuelto | `title` |
-| `<Problem>` | Problema propuesto | `title` |
-| `<Note>` | Nota/observación | `title` |
-| `<Image>` | Imagen con caption | `src` (obligatorio), `alt` (obligatorio), `caption` |
-| `<Quiz>` | Pregunta interactiva | `question` (obligatorio), `answer` |
-| `<StressCalculator>` | Calculadora σ = P/A | — |
-| `<BeamDiagram>` | Diagrama de viga | — |
-| `<MohrCircle>` | Círculo de Mohr | — |
 
 ---
 
-## Imágenes
+## 🛠️ Herramientas Interactivas (Calculadoras)
 
-### Cómo funciona
+El sistema soporta calculadoras dinámicas y simuladores en vivo (como una calculadora de esfuerzos). Sin embargo, estas herramientas requieren programación avanzada.
 
-Las imágenes se colocan **en la misma carpeta** que tu `index.mdx`. El sistema las sirve automáticamente — **no necesitas copiarlas a otra carpeta**.
-
-```
-esfuerzo-normal/
-├── index.mdx           ← tu contenido
-├── barra-axial.png     ← imagen co-ubicada
-├── diagrama.png
-└── ejemplo-resuelto.jpg
-```
-
-### Uso en MDX
-
-```mdx
-<Image
-  src="./barra-axial.png"
-  alt="Barra sometida a carga axial"
-  caption="Figura 2.1 — Barra prismática bajo tracción"
-/>
-```
-
-También funciona sin el `./`:
-
-```mdx
-<Image src="diagrama.png" alt="Diagrama de sección transversal" />
-```
-
-### Formatos soportados
-
-| Formato | Extensiones |
-|---|---|
-| PNG | `.png` |
-| JPEG | `.jpg`, `.jpeg` |
-| WebP | `.webp` |
-| AVIF | `.avif` |
-| GIF | `.gif` |
-| SVG | `.svg` |
-
-### Recomendaciones
-
-- ✅ Usa rutas relativas: `./mi-imagen.png`
-- ✅ Nombra las imágenes descriptivamente: `diagrama-seccion-transversal.png`
-- ✅ Usa PNG para diagramas técnicos, JPEG para fotos
-- ❌ No uses rutas absolutas del sistema de archivos
-- ❌ No necesitas mover imágenes a `public/`
+> 📞 **¿Tienes una propuesta o quieres crear una herramienta interactiva nueva para tu tema?**  
+> Comunícate conmigo directamente a mi número y lo desarrollamos: **[AQUÍ VA TU NÚMERO]**
 
 ---
 
-## Ecuaciones con LaTeX
+## 🔢 Escribiendo Matemáticas (Fórmulas)
 
-El curso soporta ecuaciones matemáticas con LaTeX (renderizadas con KaTeX).
+No necesitas ser un experto en matemáticas de computadora. Para escribir fórmulas bonitas, usamos un sistema que convierte códigos de texto en símbolos matemáticos reales. 
 
-### En línea
+**Regla de oro:** Siempre encierra tus fórmulas entre dos signos de dólar `$$` arriba y abajo.
 
-Usa un solo `$`:
-
-```mdx
-La fórmula del esfuerzo es $\sigma = P/A$ donde $P$ es la fuerza.
-```
-
-Resultado: La fórmula del esfuerzo es σ = P/A donde P es la fuerza.
-
-### En bloque (centrada)
-
-Usa doble `$$`:
+Aquí tienes un "copia y pega" de las fórmulas que más usarás en el curso. Solo cópialas en tu archivo y cambia las letras que necesites:
 
 ```mdx
+<!-- Fracciones básicas (P sobre A) -->
 $$
-\sigma = \frac{P}{A}
+\frac{P}{A}
 $$
-```
 
-### Ejemplos comunes para Resistencia de Materiales
-
-```mdx
 <!-- Esfuerzo normal -->
 $$
 \sigma = \frac{P}{A}
 $$
 
-<!-- Ley de Hooke -->
+<!-- Esfuerzo cortante -->
 $$
-\sigma = E \cdot \varepsilon
+\tau = \frac{V}{A}
 $$
 
 <!-- Deformación axial -->
 $$
-\delta = \frac{PL}{AE}
-$$
-
-<!-- Momento de inercia -->
-$$
-I = \frac{\pi d^4}{64}
-$$
-
-<!-- Esfuerzo de flexión -->
-$$
-\sigma = \frac{Mc}{I}
-$$
-
-<!-- Esfuerzo cortante -->
-$$
-\tau = \frac{VQ}{It}
-$$
-
-<!-- Fórmula de Euler -->
-$$
-P_{cr} = \frac{\pi^2 EI}{L_e^2}
-$$
-
-<!-- Círculo de Mohr -->
-$$
-\sigma_{1,2} = \frac{\sigma_x + \sigma_y}{2} \pm \sqrt{\left(\frac{\sigma_x - \sigma_y}{2}\right)^2 + \tau_{xy}^2}
+\delta = \frac{P \cdot L}{A \cdot E}
 $$
 ```
 
-### Referencia rápida de símbolos
+### Diccionario rápido de símbolos:
+Copia y pega estos "códigos" dentro de tus signos de dólar (`$$`) para generar el símbolo.
 
-| Símbolo | LaTeX | Resultado |
-|---|---|---|
-| Sigma | `\sigma` | σ |
-| Tau | `\tau` | τ |
-| Epsilon | `\varepsilon` | ε |
-| Delta | `\delta` | δ |
-| Pi | `\pi` | π |
-| Fracción | `\frac{a}{b}` | a/b |
-| Raíz | `\sqrt{x}` | √x |
-| Superíndice | `x^2` | x² |
-| Subíndice | `x_1` | x₁ |
-| Texto en ecuación | `\text{ MPa}` | MPa |
-| Espacio fino | `\,` | (espacio) |
+| Si quieres este símbolo | Copia este código |
+|---|---|
+| Esfuerzo (σ) | `\sigma` |
+| Cortante (τ) | `\tau` |
+| Deformación (ε) | `\varepsilon` |
+| Pi (π) | `\pi` |
+| Potencia (ej. x²) | `x^2` |
+| Multiplicación (punto) | `\cdot` |
+| Raíz Cuadrada (√) | `\sqrt{25}` |
+| Fracción | `\frac{arriba}{abajo}` |
 
 ---
 
-## Tablas
+## 📝 Plantilla de tema completa
 
-Usa la sintaxis estándar de Markdown:
-
-```mdx
-| Propiedad | Símbolo | Unidades |
-|---|---|---|
-| Esfuerzo | σ | MPa |
-| Fuerza | P | N |
-| Área | A | mm² |
-| Módulo de Young | E | GPa |
-```
-
----
-
-## Ejemplo completo de un tema
-
-Aquí tienes una plantilla completa que puedes copiar para empezar un tema nuevo:
+Copia esta plantilla para empezar un tema nuevo:
 
 ```mdx
 {/*
@@ -468,23 +244,18 @@ Aquí tienes una plantilla completa que puedes copiar para empezar un tema nuevo
 
 # Título del tema
 
-Párrafo introductorio que explica de qué trata este tema y por qué
-es importante en resistencia de materiales.
+Párrafo introductorio que explica de qué trata este tema
+y por qué es importante en resistencia de materiales.
 
 ---
 
 ## Conceptos fundamentales
 
-Explicación del concepto principal...
-
 <Definition title="Nombre del concepto">
-Definición formal del concepto, incluyendo las variables
-y su significado físico.
+Definición formal incluyendo variables y su significado físico.
 </Definition>
 
 ## Ecuación principal
-
-La ecuación fundamental para este tema es:
 
 $$
 \sigma = \frac{P}{A}
@@ -504,18 +275,17 @@ donde:
 />
 
 <Note>
-Observación importante sobre el concepto o condiciones
-de aplicabilidad.
+Observación importante sobre condiciones de aplicabilidad.
 </Note>
 
 ## Ejemplo resuelto
 
 <Example title="Problema X.1 — Título descriptivo">
-Enunciado del problema con los datos necesarios.
+Enunciado del problema con todos los datos.
 
 **Datos:**
-- Variable₁ = valor
-- Variable₂ = valor
+- Variable₁ = valor₁
+- Variable₂ = valor₂
 
 **Solución:**
 
@@ -531,8 +301,8 @@ $$
 ## Problema propuesto
 
 <Problem>
-Enunciado del problema para que el estudiante resuelva.
-Incluir todos los datos necesarios.
+Enunciado del ejercicio para que el estudiante resuelva.
+Incluye todos los datos necesarios.
 </Problem>
 
 <Quiz
@@ -543,59 +313,62 @@ Incluir todos los datos necesarios.
 
 ---
 
-## Previsualizar tu contenido
+## ❓ Preguntas frecuentes
 
-```bash
-# Inicia el servidor de desarrollo
-npm run dev
-```
-
-1. Abre **http://localhost:3000** en tu navegador
-2. Usa **Ctrl+K** para buscar tu tema
-3. Cada vez que guardes tu archivo `.mdx`, la página se actualiza automáticamente
-
----
-
-## Preguntas frecuentes
-
-### ¿Necesito saber React?
+### ¿Necesito saber React o programación?
 **No.** Solo necesitas saber Markdown (y opcionalmente LaTeX para ecuaciones). Los componentes como `<Definition>` y `<Example>` se usan como etiquetas HTML simples.
 
-### ¿Necesito crear una página React para mi tema?
+### ¿Necesito crear una página o ruta manualmente?
 **No.** Solo crea tu archivo `index.mdx` y el sistema genera la página automáticamente.
 
 ### ¿Dónde pongo mis imágenes?
-En la **misma carpeta** que tu `index.mdx`. Referéncialas con `<Image src="./mi-imagen.png" alt="..." />`.
+En la **misma carpeta** que tu `index.mdx`. Referencíalas con `<Image src="./mi-imagen.png" alt="..." />`.
 
 ### ¿Cómo veo mi contenido en el navegador?
-Ejecuta `npm run dev` y navega a `/curso/<tu-slug>`. Ejemplo: si tu archivo está en `src/content/resistencia/02-esfuerzo-deformacion/ley-de-hooke/index.mdx`, la URL es `http://localhost:3000/curso/02-esfuerzo-deformacion/ley-de-hooke`.
+Con `npm run dev` corriendo, navega a `http://localhost:4321/curso/<tu-slug>`.
 
-### ¿Qué pasa si mi sección aparece como "Próximamente"?
-Significa que el slug está registrado en `lib/course-data.ts` pero el archivo `index.mdx` no existe todavía. ¡Créalo!
+Por ejemplo, si tu carpeta es `src/content/resistencia/02-deformaciones-ley-hooke/ley-de-hooke/`, la URL es:
+```
+http://localhost:4321/curso/02-deformaciones-ley-hooke/ley-de-hooke
+```
 
-### ¿Cómo agrego un capítulo completamente nuevo?
+### ¿Mi sección aparece como "Próximamente"?
+Significa que el slug está en `lib/course-data.ts` pero el archivo `index.mdx` no existe todavía. ¡Créalo!
+
+### ¿Cómo agrego un capítulo nuevo?
 Edita `lib/course-data.ts` y agrega un nuevo objeto al array `chapters` con su número, título y secciones.
 
-### ¿Puedo usar HTML normal en mi MDX?
-Sí, pero para la mayoría de casos los componentes disponibles (`<Definition>`, `<Example>`, etc.) son suficientes y mantienen el estilo consistente.
+### ¿Puedo usar HTML normal en MDX?
+Sí, pero para la mayoría de casos los componentes disponibles son suficientes y mantienen el estilo visual consistente.
 
-### ¿Las ecuaciones se renderizan bien?
-Sí, usamos KaTeX. Cualquier expresión LaTeX estándar funciona. Si algo no se ve bien, consulta la [documentación de KaTeX](https://katex.org/docs/supported).
+### ¿Las ecuaciones se ven bien en el sitio publicado?
+Sí, usamos KaTeX. Cualquier expresión LaTeX estándar funciona. Si algo no se renderiza, consulta la [documentación de KaTeX](https://katex.org/docs/supported).
 
 ---
 
-## Stack tecnológico
+## 🛠️ Scripts disponibles
+
+| Comando | Descripción |
+|---|---|
+| `npm run dev` | Inicia el servidor de desarrollo en `http://localhost:4321` |
+| `npm run build` | Genera el sitio estático en la carpeta `dist/` |
+| `npm run preview` | Previsualiza el sitio construido localmente |
+
+---
+
+## 🧱 Stack tecnológico
 
 | Tecnología | Uso |
 |---|---|
-| Next.js 16 | Framework web |
-| React 19 | Componentes de UI |
-| TypeScript | Tipado estático |
-| Tailwind CSS | Estilos |
-| MDX | Contenido del curso |
-| KaTeX | Ecuaciones matemáticas |
-| Lucide | Íconos |
+| [Astro 4](https://astro.build/) | Framework web estático |
+| [React 18](https://react.dev/) | Componentes interactivos (Islands) |
+| [TypeScript](https://www.typescriptlang.org/) | Tipado estático |
+| [Tailwind CSS](https://tailwindcss.com/) | Estilos |
+| [MDX](https://mdxjs.com/) | Contenido del curso |
+| [KaTeX](https://katex.org/) | Ecuaciones matemáticas |
+| [Lucide](https://lucide.dev/) | Íconos |
+| [GitHub Pages](https://pages.github.com/) | Hosting del sitio |
 
 ---
 
-**¿Tienes dudas?** Abre un issue en el repositorio o contacta al equipo del curso.
+**¿Tienes dudas?** Abre un [issue en el repositorio](https://github.com/webresis/webresis.github.io/issues) o contacta al equipo del curso.

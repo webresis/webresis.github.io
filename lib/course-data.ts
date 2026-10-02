@@ -37,15 +37,13 @@ export const chapters: Chapter[] = [
     number: '01',
     title: 'Esfuerzos, falla y factor de seguridad',
     sections: [
-      { id: '1.1', title: 'Conceptos principales', slug: '01-esfuerzos-falla/conceptos-principales' },
-    ],
+      { id: '1.1', title: 'Esfuerzos Principales', slug: '01-esfuerzos-falla/esfuerzos-principales' },],
   },
   {
     number: '02',
     title: 'Deformaciones y ley de Hooke',
     sections: [
-      { id: '2.1', title: 'Conceptos principales', slug: '02-deformaciones-ley-hooke/conceptos-principales' },
-    ],
+      { id: '2.1', title: 'Conceptos principales', slug: '02-deformaciones-ley-hooke/conceptos-principales' },],
   },
   {
     number: '03',

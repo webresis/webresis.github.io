@@ -152,9 +152,9 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"resistencia": {
-"01-esfuerzos-falla/conceptos-principales/index.mdx": {
-	id: "01-esfuerzos-falla/conceptos-principales/index.mdx";
-  slug: "01-esfuerzos-falla/conceptos-principales";
+"01-esfuerzos-falla/esfuerzos-principales/index.mdx": {
+	id: "01-esfuerzos-falla/esfuerzos-principales/index.mdx";
+  slug: "01-esfuerzos-falla/esfuerzos-principales";
   body: string;
   collection: "resistencia";
   data: any

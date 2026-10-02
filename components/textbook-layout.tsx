@@ -230,12 +230,7 @@ export default function TextbookLayout({
                 </div>
               )}
 
-              {/* Section title (from metadata; MDX can also render its own h1) */}
-              {sectionTitle && (
-                <h1 className="font-serif text-4xl font-semibold tracking-[-0.03em] text-[#4a1112] sm:text-[52px] sm:leading-[1.05]">
-                  {sectionTitle}
-                </h1>
-              )}
+              {/* Section title removed as requested */}
 
               {/* MDX content slot */}
               <div className="mdx-content">

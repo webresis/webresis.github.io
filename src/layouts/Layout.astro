@@ -1,7 +1,6 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
 import '../styles/globals.css';
-import 'katex/dist/katex.min.css';
 
 interface Props {
   title: string;
@@ -20,6 +19,13 @@ const { title, description } = Astro.props;
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <!-- KaTeX CSS para las fórmulas matemáticas -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
+      integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71bZBTIQHQ"
+      crossorigin="anonymous"
+    />
   </head>
   <body class="bg-[#faf5f3] text-[#4d3838] antialiased min-h-screen selection:bg-[#dfc4c4] selection:text-[#4b1719]">
     <slot />

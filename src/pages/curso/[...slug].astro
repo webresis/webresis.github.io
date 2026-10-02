@@ -22,22 +22,21 @@ if (!sectionData) {
 
 const { section, previous, next } = sectionData;
 
-// Load MDX content dynamically
-const mdxFiles = import.meta.glob('/src/content/resistencia/**/*.mdx', { eager: true });
-const exactPath = `/src/content/resistencia/${slug}/index.mdx`;
-const fallbackPath = `/src/content/resistencia/${slug}.mdx`;
+// Load MDX/Markdown content dynamically
+const mdxFiles = import.meta.glob('/src/content/resistencia/**/*.{mdx,md}', { eager: true });
+const exactPathMdx = `/src/content/resistencia/${slug}/index.mdx`;
+const exactPathMd = `/src/content/resistencia/${slug}/index.md`;
+const fallbackPathMdx = `/src/content/resistencia/${slug}.mdx`;
+const fallbackPathMd = `/src/content/resistencia/${slug}.md`;
 
 let Content = null;
 let headings = [];
 
-if (mdxFiles[exactPath]) {
-  const mod = mdxFiles[exactPath] as any;
-  Content = mod.default;
-  headings = mod.getHeadings?.() || [];
-} else if (mdxFiles[fallbackPath]) {
-  const mod = mdxFiles[fallbackPath] as any;
-  Content = mod.default;
-  headings = mod.getHeadings?.() || [];
+const targetModule = (mdxFiles[exactPathMdx] || mdxFiles[exactPathMd] || mdxFiles[fallbackPathMdx] || mdxFiles[fallbackPathMd]) as any;
+
+if (targetModule) {
+  Content = targetModule.default;
+  headings = targetModule.getHeadings?.() || [];
 }
 
 // Map Astro's headings { depth, slug, text } to { level, id, text }
@@ -61,7 +60,7 @@ const mappedHeadings = headings.map((h: any) => ({
       next={next as any}
     >
       {Content ? (
-        <Content components={mdxComponents} />
+        <Content components={{ ...mdxComponents, Image: (props: any) => mdxComponents.Image({ ...props, slug: slug as string }) }} />
       ) : (
         <div class="flex min-h-[40vh] items-center justify-center rounded-xl border border-dashed border-[#d9aaaa] bg-[#faf0ef] p-10 text-center text-[#765e5e]">
           <div>
