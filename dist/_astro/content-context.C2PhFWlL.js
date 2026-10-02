@@ -1,0 +1,1 @@
+import{j as r}from"./jsx-runtime.TBa3i5EZ.js";import{r as n}from"./index.CVf8TyFT.js";const o=n.createContext(null);function x({slug:t,children:e}){return r.jsx(o.Provider,{value:{slug:t},children:e})}function c(){return n.useContext(o)?.slug??null}export{x as C,c as u};
