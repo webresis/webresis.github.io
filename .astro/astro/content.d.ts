@@ -208,6 +208,13 @@ declare module 'astro:content' {
   collection: "resistencia";
   data: any
 } & { render(): Render[".mdx"] };
+"08-flexion-asimetrica/torsion1/index.mdx": {
+	id: "08-flexion-asimetrica/torsion1/index.mdx";
+  slug: "08-flexion-asimetrica/torsion1";
+  body: string;
+  collection: "resistencia";
+  data: any
+} & { render(): Render[".mdx"] };
 "09-deflexion-integracion/conceptos-principales/index.mdx": {
 	id: "09-deflexion-integracion/conceptos-principales/index.mdx";
   slug: "09-deflexion-integracion/conceptos-principales";

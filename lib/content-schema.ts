@@ -85,8 +85,8 @@ $$
 \\sigma = \\frac{P}{A}
 $$
 
-:::definition{title="Definición"}
+<Definition title="Definición">
 Escribe aquí una definición importante.
-:::
+</Definition>
 `,
 }
