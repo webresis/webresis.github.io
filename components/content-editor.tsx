@@ -412,7 +412,7 @@ export default function ContentEditor({ session, initialChapter, initialSlug }: 
           <button
             onClick={async () => {
               const { auth } = await import('@/lib/firebase');
-              document.cookie = 'session_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+              window.document.cookie = 'session_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
               await auth.signOut();
               window.location.href = '/workspace-mc361/login';
             }}
